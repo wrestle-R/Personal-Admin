@@ -61,12 +61,6 @@
   },
   {
     "site": "blogs",
-    "path": "/blog/double-take",
-    "title": "Double Take",
-    "type": "Post"
-  },
-  {
-    "site": "blogs",
     "path": "/collaborate",
     "title": "Collaborate",
     "type": "Page"
@@ -189,6 +183,78 @@
     "site": "runny",
     "path": "/register",
     "title": "Register",
+    "type": "Page"
+  },
+  {
+    "site": "blogs",
+    "path": "/authors/russel",
+    "title": "Authors / Russel",
+    "type": "Page"
+  },
+  {
+    "site": "blogs",
+    "path": "/blog",
+    "title": "Blog",
+    "type": "Page"
+  },
+  {
+    "site": "blogs",
+    "path": "/blog/2",
+    "title": "Blog / 2",
+    "type": "Page"
+  },
+  {
+    "site": "blogs",
+    "path": "/tags/deep",
+    "title": "Tags / Deep",
+    "type": "Page"
+  },
+  {
+    "site": "blogs",
+    "path": "/tags/entertainment",
+    "title": "Tags / Entertainment",
+    "type": "Page"
+  },
+  {
+    "site": "blogs",
+    "path": "/tags/hackathons",
+    "title": "Tags / Hackathons",
+    "type": "Page"
+  },
+  {
+    "site": "blogs",
+    "path": "/tags/journey",
+    "title": "Tags / Journey",
+    "type": "Page"
+  },
+  {
+    "site": "blogs",
+    "path": "/tags/personal",
+    "title": "Tags / Personal",
+    "type": "Page"
+  },
+  {
+    "site": "blogs",
+    "path": "/tags/tech",
+    "title": "Tags / Tech",
+    "type": "Page"
+  },
+  {
+    "site": "blogs",
+    "path": "/tags/thoughts",
+    "title": "Tags / Thoughts",
+    "type": "Page"
+  },
+  {
+    "site": "blogs",
+    "path": "/tags/travel",
+    "title": "Tags / Travel",
+    "type": "Page"
+  },
+  {
+    "site": "blogs",
+    "path": "/tags/yap",
+    "title": "Tags / Yap",
     "type": "Page"
   }
 ]
