@@ -16,14 +16,19 @@ export function Logout() {
 }
 export function Sync() {
   const [busy, setBusy] = useState(false),
-    [result, setResult] = useState("");
+    [result, setResult] = useState(""),
+    [inactive, setInactive] = useState(false);
   async function sync() {
     setBusy(true);
     setResult("");
+    setInactive(false);
     try {
       const response = await fetch("/api/sync", { method: "POST" });
       const data = await response.json();
-      if (!response.ok) throw new Error(data.error || "Sync failed");
+      if (!response.ok) {
+        setInactive(data.code === "STRAVA_APP_INACTIVE");
+        throw new Error(data.error || "Sync failed");
+      }
       setResult(
         `${data.message}. ${data.inserted ?? data.newCount ?? 0} new, ${data.updated ?? 0} updated, ${data.failed ?? 0} failed.`,
       );
@@ -55,6 +60,16 @@ export function Sync() {
       <p aria-live="polite" className="sync-result">
         {result}
       </p>
+      {inactive && (
+        <a
+          className="external"
+          href="https://www.strava.com/settings/api"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Open Strava API settings ↗
+        </a>
+      )}
     </section>
   );
 }
