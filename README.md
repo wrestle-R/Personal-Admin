@@ -20,7 +20,7 @@ Deploy to Vercel project `admin-rdp`. Production and preview require the four va
 
 `/tracker.js` is loaded by each website. It honors Do Not Track and Global Privacy Control, excludes known bots and hides refresh/API routes. It observes normal page loads, History API navigation and Astro navigation. Local storage keeps a visit ID across tabs and reloads; after 30 minutes without observed activity, the next activity creates a new visit. A database unique index enforces one pageview per site/path/visit, including concurrent reloads. If storage is blocked, persistence across reloads is unavailable. This is an estimate, not proof that every visitor is human. Public collectors cannot be made tamper-proof.
 
-Device/browser/OS are inferred from user-agent, and laptops/desktops are grouped. Daily visitor estimates are salted hashes of site, UTC date, IP and user-agent, so totals sum daily estimates across sites. Raw IPs, user-agent strings and URL queries are not stored. Referrers store domains only. Historical blog counters are displayed separately; device/browser history cannot be recovered from those totals.
+Device/browser/OS are inferred from user-agent, and laptops/desktops are grouped. Daily visitor estimates are salted hashes of site, Kolkata date, IP and user-agent, so totals sum daily estimates across sites. Raw IPs, user-agent strings and URL queries are not stored. Referrers store domains only. Historical blog counters are displayed separately; device/browser history cannot be recovered from those totals.
 
 Resume actions measure clicks, not confirmed file transfers. Website coverage lists known source routes, and newly visited dynamic paths appear automatically. The static route catalogue is `lib/catalogue.json`; update it when adding posts if you want them listed before their first visit.
 
@@ -29,3 +29,5 @@ Database status describes the shared Runny/Supabase PostgreSQL connection only. 
 Analytics uses a private schema with public, anon and authenticated access revoked, plus row-level security. No existing application tables are changed. The server database connection is currently the existing Runny connection; a dedicated least-privilege database role is a future improvement.
 
 No editing controls are included in this first version.
+
+The overview stays compact with four KPIs and traffic, device, website and browser charts. Route tables live inside each website section. All analytics windows use Kolkata calendar days. Localhost and arbitrary preview domains are rejected before tracking starts.

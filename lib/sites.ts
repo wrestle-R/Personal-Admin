@@ -39,25 +39,19 @@ export function siteForOrigin(origin: string | null) {
         "blog.russel.is-a.dev",
         "blog.russeldanielpaul.is-a.dev",
         "blogs.russeldanielpaul.is-a.dev",
-        "blogs-rdp.vercel.app",
       ],
       portfolio: [
         "russel.is-a.dev",
         "russeldanielpaul.is-a.dev",
         "www.russel.is-a.dev",
         "www.russeldanielpaul.is-a.dev",
-        "portfolio-rdp.vercel.app",
       ],
       spotify: [
         "spotify.russel.is-a.dev",
         "spotify.russeldanielpaul.is-a.dev",
         "russels-constellation.vercel.app",
       ],
-      runny: [
-        "runny.russel.is-a.dev",
-        "runny.russeldanielpaul.is-a.dev",
-        "running-out-of-excuses.vercel.app",
-      ],
+      runny: ["runny.russel.is-a.dev", "runny.russeldanielpaul.is-a.dev"],
     };
     return sites.find((s) => aliases[s.id].includes(url.hostname));
   } catch {

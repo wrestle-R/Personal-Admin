@@ -50,7 +50,12 @@ export async function POST(request: Request) {
         (site.id !== "portfolio" || path !== "/resume"))
     )
       return new Response(null, { status: 400 });
-    const day = new Date().toISOString().slice(0, 10);
+    const day = new Intl.DateTimeFormat("en-CA", {
+      timeZone: "Asia/Kolkata",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    }).format(new Date());
     const ip = (
       request.headers.get("x-vercel-forwarded-for") ||
       request.headers.get("x-forwarded-for") ||
