@@ -1,0 +1,28 @@
+{
+  "name": "personal-admin",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port 3410",
+    "build": "next build",
+    "start": "next start --port 3410",
+    "typecheck": "tsc --noEmit",
+    "test": "node --import tsx --test tests/*.test.ts"
+  },
+  "dependencies": {
+    "next": "16.4.1",
+    "react": "19.2.5",
+    "react-dom": "19.2.5",
+    "pg": "8.16.3",
+    "lucide-react": "0.525.0",
+    "@fontsource/dm-sans": "5.2.8"
+  },
+  "devDependencies": {
+    "typescript": "6.0.3",
+    "@types/node": "24.10.1",
+    "@types/react": "19.1.6",
+    "@types/react-dom": "19.1.6",
+    "@types/pg": "8.15.6",
+    "tsx": "4.20.6"
+  }
+}

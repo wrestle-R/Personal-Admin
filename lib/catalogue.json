@@ -1,0 +1,194 @@
+[
+  {
+    "site": "blogs",
+    "path": "/blog/vpssh",
+    "title": "vpSSH",
+    "type": "Post"
+  },
+  {
+    "site": "blogs",
+    "path": "/blog/20-days-before-21",
+    "title": "20 days before 21",
+    "type": "Post"
+  },
+  {
+    "site": "blogs",
+    "path": "/blog/yhprums-law",
+    "title": "Yhprum's Law",
+    "type": "Post"
+  },
+  {
+    "site": "blogs",
+    "path": "/blog/munnar-trip",
+    "title": "Munnar should be spelt 'Moonar'",
+    "type": "Post"
+  },
+  {
+    "site": "blogs",
+    "path": "/blog/not-accept-defeat",
+    "title": "How Not to Accept Defeat 101",
+    "type": "Post"
+  },
+  {
+    "site": "blogs",
+    "path": "/blog/sitcoms",
+    "title": "Sitcoms",
+    "type": "Post"
+  },
+  {
+    "site": "blogs",
+    "path": "/blog/6-1-10-human-being",
+    "title": "6'1/10 human being",
+    "type": "Post"
+  },
+  {
+    "site": "blogs",
+    "path": "/blog/voices-told-me-to-write",
+    "title": "So the Voices Told Me to Write This",
+    "type": "Post"
+  },
+  {
+    "site": "blogs",
+    "path": "/blog/linux-experience",
+    "title": "The Linux Experience",
+    "type": "Post"
+  },
+  {
+    "site": "blogs",
+    "path": "/blog/the-long-stride",
+    "title": "The Long Stride",
+    "type": "Post"
+  },
+  {
+    "site": "blogs",
+    "path": "/blog/double-take",
+    "title": "Double Take",
+    "type": "Post"
+  },
+  {
+    "site": "blogs",
+    "path": "/collaborate",
+    "title": "Collaborate",
+    "type": "Page"
+  },
+  {
+    "site": "blogs",
+    "path": "/guitar",
+    "title": "Guitar",
+    "type": "Page"
+  },
+  {
+    "site": "blogs",
+    "path": "/movies",
+    "title": "Movies",
+    "type": "Page"
+  },
+  {
+    "site": "blogs",
+    "path": "/about",
+    "title": "About",
+    "type": "Page"
+  },
+  {
+    "site": "blogs",
+    "path": "/wallpaper-upload",
+    "title": "Wallpaper-Upload",
+    "type": "Page"
+  },
+  {
+    "site": "blogs",
+    "path": "/wallpapers",
+    "title": "Wallpapers",
+    "type": "Page"
+  },
+  {
+    "site": "blogs",
+    "path": "/",
+    "title": "Home",
+    "type": "Page"
+  },
+  {
+    "site": "blogs",
+    "path": "/spotify",
+    "title": "Spotify",
+    "type": "Page"
+  },
+  {
+    "site": "blogs",
+    "path": "/songs",
+    "title": "Songs",
+    "type": "Page"
+  },
+  {
+    "site": "blogs",
+    "path": "/tags",
+    "title": "Tags",
+    "type": "Page"
+  },
+  {
+    "site": "blogs",
+    "path": "/authors",
+    "title": "Authors",
+    "type": "Page"
+  },
+  {
+    "site": "portfolio",
+    "path": "/",
+    "title": "Home",
+    "type": "Page"
+  },
+  {
+    "site": "portfolio",
+    "path": "/resume",
+    "title": "Resume",
+    "type": "Page"
+  },
+  {
+    "site": "portfolio",
+    "path": "/minecraft",
+    "title": "Minecraft",
+    "type": "Page"
+  },
+  {
+    "site": "spotify",
+    "path": "/",
+    "title": "Home",
+    "type": "Page"
+  },
+  {
+    "site": "spotify",
+    "path": "/2D",
+    "title": "2D",
+    "type": "Page"
+  },
+  {
+    "site": "runny",
+    "path": "/",
+    "title": "Home",
+    "type": "Page"
+  },
+  {
+    "site": "runny",
+    "path": "/runs",
+    "title": "Runs",
+    "type": "Page"
+  },
+  {
+    "site": "runny",
+    "path": "/dashboard",
+    "title": "Dashboard",
+    "type": "Page"
+  },
+  {
+    "site": "runny",
+    "path": "/login",
+    "title": "Login",
+    "type": "Page"
+  },
+  {
+    "site": "runny",
+    "path": "/register",
+    "title": "Register",
+    "type": "Page"
+  }
+]
