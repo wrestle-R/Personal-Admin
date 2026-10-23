@@ -36,6 +36,8 @@ export function siteForOrigin(origin: string | null) {
     const aliases: Record<string, string[]> = {
       blogs: [
         "blogs.russel.is-a.dev",
+        "blog.russel.is-a.dev",
+        "blog.russeldanielpaul.is-a.dev",
         "blogs.russeldanielpaul.is-a.dev",
         "blogs-rdp.vercel.app",
       ],
