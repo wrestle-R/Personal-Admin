@@ -1527,3 +1527,294 @@ td .post-tag {
 .login .muted {
   color: #a3b298;
 }
+
+/* Overview keeps the details in the sidebar pages, never a long directory. */
+.overview-content {
+  padding-top: 24px;
+}
+.overview-content .page-heading {
+  margin-bottom: 18px;
+  align-items: center;
+}
+.overview-content .eyebrow {
+  display: none;
+}
+.overview-content h1 {
+  font-size: 27px;
+}
+.overview-content .page-heading .muted {
+  margin-top: 6px;
+}
+.overview-content .toolbar {
+  margin-bottom: 12px;
+}
+.overview-content .stats-grid {
+  margin-bottom: 16px;
+}
+.overview-content .stats-grid > section {
+  padding: 16px 20px;
+}
+.overview-content .stats-grid strong {
+  margin: 10px 0 6px;
+  font-size: 29px;
+}
+.overview-content .stats-grid .health-value {
+  font-size: 19px;
+  min-height: 35px;
+}
+.overview-content .stats-grid small {
+  font-size: 9px;
+}
+.overview-graphs {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 16px;
+}
+.overview-graphs .panel {
+  margin: 0;
+  min-width: 0;
+  padding: 17px 20px;
+}
+.mini-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.mini-heading h2 {
+  font-size: 13px;
+}
+.mini-heading .tiny {
+  font-size: 9px;
+}
+.chart-key {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  color: #97a88f;
+  font-size: 9px;
+}
+.chart-key i {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 2px;
+  background: #91b7aa;
+}
+.chart-key i:nth-of-type(2) {
+  background: #88a7c4;
+  margin-left: 7px;
+}
+.overview-line {
+  position: relative;
+  height: 155px;
+}
+.overview-line canvas {
+  width: 100% !important;
+}
+.graph-empty {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  pointer-events: none;
+  font-size: 10px;
+  color: #8a9d82;
+}
+.device-graph {
+  display: flex;
+  align-items: center;
+  gap: 23px;
+  height: 155px;
+}
+.device-ring {
+  width: 125px;
+  height: 125px;
+  position: relative;
+  flex-shrink: 0;
+}
+.device-ring.no-data:before {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  border: 11px solid #303e32;
+  border-radius: 50%;
+}
+.ring-total {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.ring-total strong {
+  font-size: 25px;
+  font-weight: 500;
+  letter-spacing: -1px;
+}
+.ring-total span {
+  font-size: 9px;
+  color: #91a387;
+  margin-top: 3px;
+}
+.device-legend {
+  flex: 1;
+}
+.device-legend > div {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 10px;
+  margin: 14px 0;
+}
+.device-legend i {
+  height: 5px;
+  width: 5px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.device-legend > div > span {
+  flex: 1;
+  color: #a1b298;
+  font-size: 9px;
+}
+.device-legend strong {
+  font-size: 10px;
+  font-weight: 400;
+}
+.comparison-graph {
+  height: 105px;
+  position: relative;
+  padding-right: 25px;
+}
+.comparison-values {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  font-size: 10px;
+  color: #c3d1b9;
+}
+.website-shortcuts {
+  display: flex;
+  gap: 15px;
+  margin-top: 12px;
+  border-top: 1px solid var(--line);
+  padding-top: 10px;
+}
+.website-shortcuts a {
+  font-size: 9px;
+  color: #a8bd98;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+.website-shortcuts a:hover {
+  color: #e0edd5;
+}
+.overview-content .method-note {
+  margin: 14px 0 16px;
+  font-size: 9px;
+}
+.overview-content .content-footer {
+  padding: 14px 0;
+}
+.overview-websites,
+.overview-browsers {
+  min-height: 160px;
+}
+.overview-content .topbar {
+  height: 56px;
+}
+@media (max-width: 1100px) {
+  .device-graph {
+    gap: 12px;
+  }
+  .device-ring {
+    width: 105px;
+    height: 105px;
+  }
+  .overview-graphs .panel {
+    padding: 16px;
+  }
+  .device-legend > div > span {
+    font-size: 8px;
+  }
+}
+@media (max-width: 760px) {
+  .overview-content {
+    padding-top: 21px;
+  }
+  .overview-content .page-heading {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .overview-content .heading-actions {
+    margin-top: 0;
+  }
+  .overview-content .heading-actions .button {
+    font-size: 9px;
+    padding: 8px;
+  }
+  .overview-content .page-heading .muted {
+    max-width: 220px;
+    font-size: 10px;
+  }
+  .overview-content .stats-grid > section {
+    padding: 14px;
+  }
+  .overview-content .stats-grid strong {
+    font-size: 25px;
+  }
+  .overview-graphs {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .overview-traffic {
+    order: 0;
+  }
+  .overview-websites {
+    order: 1;
+  }
+  .overview-devices {
+    order: 2;
+  }
+  .overview-browsers {
+    order: 3;
+  }
+  .device-graph {
+    justify-content: center;
+    gap: 28px;
+    height: 130px;
+  }
+  .device-ring {
+    width: 115px;
+    height: 115px;
+  }
+  .device-legend {
+    max-width: 190px;
+  }
+  .device-legend > div > span {
+    font-size: 10px;
+  }
+  .overview-content .method-note {
+    font-size: 8px;
+  }
+  .overview-content .content-footer {
+    font-size: 8px;
+  }
+  .website-shortcuts {
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .website-shortcuts a {
+    font-size: 10px;
+  }
+}

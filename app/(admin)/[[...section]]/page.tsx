@@ -20,6 +20,7 @@ import {
 import { COOKIE, validSession } from "@/lib/auth";
 import { dashboardData, databaseStatus, type Row } from "@/lib/data";
 import { sites } from "@/lib/sites";
+import OverviewGraphs from "@/components/OverviewGraphs";
 import { Logout, Sync } from "@/components/Controls";
 export const dynamic = "force-dynamic";
 const fmt = (n: unknown) => Number(n || 0).toLocaleString("en-IN");
@@ -83,7 +84,8 @@ export default async function Page({
   )
     notFound();
   const selectedSite = current === "resume" ? "portfolio" : site?.id;
-  const path = current === "resume" ? "/resume" : search.path;
+  const path =
+    current === "resume" ? "/resume" : site ? search.path : undefined;
   const days = [7, 30, 90].includes(Number(search.days))
     ? Number(search.days)
     : 30;
@@ -94,7 +96,7 @@ export default async function Page({
   const totals = data.totals[0] || {};
   const title =
     current === "overview"
-      ? "A little overview."
+      ? "Overview."
       : current === "database"
         ? "Under the hood."
         : current === "resume"
@@ -205,7 +207,10 @@ export default async function Page({
             </div>
           </div>
         </header>
-        <main id="content" className="content">
+        <main
+          id="content"
+          className={`content ${current === "overview" ? "overview-content" : ""}`}
+        >
           <div className="page-heading">
             <div>
               <p className="eyebrow">
@@ -328,194 +333,194 @@ export default async function Page({
                   </small>
                 </section>
               </div>
-              <section className="panel traffic">
-                <div className="panel-heading">
-                  <div>
-                    <h2>Traffic, quietly.</h2>
-                    <p>Page views over the last {days} days</p>
-                  </div>
-                  <span className="legend">
-                    <i />
-                    Page views
-                  </span>
-                </div>
-                <div
-                  className="chart"
-                  role="img"
-                  aria-label={`Daily page views: ${dates.map((d) => d.key + ": " + d.value).join(", ")}`}
-                >
-                  <div className="chart-grid">
-                    <span>{fmt(max)}</span>
-                    <span>{fmt(Math.round(max / 2))}</span>
-                    <span>0</span>
-                  </div>
-                  <div className="bars">
-                    {dates.map((d) => (
-                      <div key={d.key} title={`${d.key}: ${d.value} views`}>
-                        <span
-                          style={{
-                            height: d.value
-                              ? `${Math.max((d.value / max) * 100, 2)}%`
-                              : "2px",
-                          }}
-                          className={d.value ? "" : "zero"}
-                        />
+              {current !== "overview" && (
+                <>
+                  <section className="panel traffic">
+                    <div className="panel-heading">
+                      <div>
+                        <h2>Traffic, quietly.</h2>
+                        <p>Page views over the last {days} days</p>
                       </div>
-                    ))}
-                  </div>
-                  {!Number(totals.views) && (
-                    <div className="chart-empty">
-                      <Activity size={20} />
-                      <strong>Room for the first visit.</strong>
-                      <span>New tracking starts here. No made-up history.</span>
+                      <span className="legend">
+                        <i />
+                        Page views
+                      </span>
                     </div>
-                  )}
-                </div>
-                <div className="chart-axis">
-                  <span>{dates[0].key}</span>
-                  <span>{dates.at(-1)?.key}</span>
-                </div>
-              </section>
-              {current === "overview" && (
-                <section className="sites-section">
-                  <div className="section-title">
-                    <h2>The whole little internet.</h2>
-                    <span>04 websites</span>
-                  </div>
-                  <div className="site-grid">
-                    {sites.map((s) => {
-                      const Icon = icons[s.id];
-                      const coverage = data.coverage.find(
-                        (c) => c.site === s.id,
-                      );
-                      const views = pages
-                        .filter((p) => p.site === s.id)
-                        .reduce((n, p) => n + Number(p.views), 0);
-                      return (
-                        <Link
-                          className="site-card"
-                          href={`/${s.id}?days=${days}`}
-                          key={s.id}
-                        >
-                          <span className={"site-icon " + s.id}>
-                            <Icon size={19} />
-                          </span>
-                          <ArrowUpRight className="site-arrow" size={16} />
-                          <h3>{s.name}</h3>
-                          <p>{s.host}</p>
-                          <div className="site-bottom">
-                            <strong>
-                              {fmt(views)}
-                              <small> views</small>
-                            </strong>
-                            <span className="tiny">
-                              {coverage ? "Recording" : "Awaiting first visit"}
-                            </span>
+                    <div
+                      className="chart"
+                      role="img"
+                      aria-label={`Daily page views: ${dates.map((d) => d.key + ": " + d.value).join(", ")}`}
+                    >
+                      <div className="chart-grid">
+                        <span>{fmt(max)}</span>
+                        <span>{fmt(Math.round(max / 2))}</span>
+                        <span>0</span>
+                      </div>
+                      <div className="bars">
+                        {dates.map((d) => (
+                          <div key={d.key} title={`${d.key}: ${d.value} views`}>
+                            <span
+                              style={{
+                                height: d.value
+                                  ? `${Math.max((d.value / max) * 100, 2)}%`
+                                  : "2px",
+                              }}
+                              className={d.value ? "" : "zero"}
+                            />
                           </div>
-                        </Link>
-                      );
-                    })}
-                  </div>
-                </section>
+                        ))}
+                      </div>
+                      {!Number(totals.views) && (
+                        <div className="chart-empty">
+                          <Activity size={20} />
+                          <strong>Room for the first visit.</strong>
+                          <span>
+                            New tracking starts here. No made-up history.
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="chart-axis">
+                      <span>{dates[0].key}</span>
+                      <span>{dates.at(-1)?.key}</span>
+                    </div>
+                  </section>
+                </>
+              )}
+              {current === "overview" && (
+                <OverviewGraphs
+                  days={dates.map((d) => ({
+                    date: d.key,
+                    views: d.value,
+                    visitors: Number(
+                      data.daily.find((row) => row.day === d.key)?.visitors ||
+                        0,
+                    ),
+                  }))}
+                  devices={data.device.map((r) => ({
+                    name: String(r.name),
+                    count: Number(r.count),
+                  }))}
+                  browsers={data.browser.map((r) => ({
+                    name: String(r.name),
+                    count: Number(r.count),
+                  }))}
+                  websites={sites.map((site) => ({
+                    id: site.id,
+                    name: site.name,
+                    views: pages
+                      .filter((p) => p.site === site.id)
+                      .reduce((n, p) => n + Number(p.views), 0),
+                  }))}
+                  range={days}
+                />
               )}
               {current === "runny" && <Sync />}
-              <section className="panel pages-panel">
-                <div className="panel-heading">
-                  <div>
-                    <h2>
-                      {path
-                        ? "This page"
-                        : current === "blogs"
-                          ? "Every post. Every page."
-                          : "Pages & destinations"}
-                    </h2>
-                    <p>Pick a page for its devices, browsers and referrers.</p>
+              {current !== "overview" && (
+                <>
+                  <section className="panel pages-panel">
+                    <div className="panel-heading">
+                      <div>
+                        <h2>
+                          {path
+                            ? "This page"
+                            : current === "blogs"
+                              ? "Every post. Every page."
+                              : "Pages & destinations"}
+                        </h2>
+                        <p>
+                          Pick a page for its devices, browsers and referrers.
+                        </p>
+                      </div>
+                      <span className="tiny">
+                        {pages.length} {pages.length === 1 ? "page" : "pages"}
+                      </span>
+                    </div>
+                    <div className="table-wrap">
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>Page</th>
+                            {!site && current !== "resume" && <th>Website</th>}
+                            <th className="numeric">Views</th>
+                            <th className="numeric">Daily visitors</th>
+                            {(current === "blogs" ||
+                              current === "overview") && (
+                              <th className="numeric">Old counter*</th>
+                            )}
+                            <th>
+                              <span className="sr-only">Details</span>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {pages.map((p) => (
+                            <tr key={p.site + p.path}>
+                              <td>
+                                <Link
+                                  href={`/${p.site}?days=${days}&path=${encodeURIComponent(p.path)}`}
+                                >
+                                  <strong>{p.title}</strong>
+                                  <small>
+                                    {p.path}{" "}
+                                    {p.type === "Post" && (
+                                      <span className="post-tag">POST</span>
+                                    )}
+                                  </small>
+                                </Link>
+                              </td>
+                              {!site && current !== "resume" && (
+                                <td className="muted">
+                                  {sites.find((s) => s.id === p.site)?.name}
+                                </td>
+                              )}
+                              <td className="numeric">{fmt(p.views)}</td>
+                              <td className="numeric muted">
+                                {fmt(p.visitors)}
+                              </td>
+                              {(current === "blogs" ||
+                                current === "overview") && (
+                                <td className="numeric muted">
+                                  {p.legacy === null ? "—" : fmt(p.legacy)}
+                                </td>
+                              )}
+                              <td>
+                                <Link
+                                  aria-label={`View ${p.title} analytics`}
+                                  href={`/${p.site}?days=${days}&path=${encodeURIComponent(p.path)}`}
+                                >
+                                  <ArrowUpRight size={15} />
+                                </Link>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                    {(current === "blogs" || current === "overview") && (
+                      <p className="table-note">
+                        * Old blog counters are lifetime totals and may include
+                        refreshes. They are kept separate from new views.
+                      </p>
+                    )}
+                  </section>
+                  <div className="breakdowns">
+                    <Breakdown title="Devices" rows={data.device} />
+                    <Breakdown title="Browsers" rows={data.browser} />
+                    <Breakdown title="Operating systems" rows={data.os} />
+                    <Breakdown title="Referrers" rows={data.referrer} />
+                    {current === "resume" && (
+                      <Breakdown title="Resume actions" rows={data.kind} />
+                    )}
                   </div>
-                  <span className="tiny">
-                    {pages.length} {pages.length === 1 ? "page" : "pages"}
-                  </span>
-                </div>
-                <div className="table-wrap">
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>Page</th>
-                        {!site && current !== "resume" && <th>Website</th>}
-                        <th className="numeric">Views</th>
-                        <th className="numeric">Daily visitors</th>
-                        {(current === "blogs" || current === "overview") && (
-                          <th className="numeric">Old counter*</th>
-                        )}
-                        <th>
-                          <span className="sr-only">Details</span>
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {pages.map((p) => (
-                        <tr key={p.site + p.path}>
-                          <td>
-                            <Link
-                              href={`/${p.site}?days=${days}&path=${encodeURIComponent(p.path)}`}
-                            >
-                              <strong>{p.title}</strong>
-                              <small>
-                                {p.path}{" "}
-                                {p.type === "Post" && (
-                                  <span className="post-tag">POST</span>
-                                )}
-                              </small>
-                            </Link>
-                          </td>
-                          {!site && current !== "resume" && (
-                            <td className="muted">
-                              {sites.find((s) => s.id === p.site)?.name}
-                            </td>
-                          )}
-                          <td className="numeric">{fmt(p.views)}</td>
-                          <td className="numeric muted">{fmt(p.visitors)}</td>
-                          {(current === "blogs" || current === "overview") && (
-                            <td className="numeric muted">
-                              {p.legacy === null ? "—" : fmt(p.legacy)}
-                            </td>
-                          )}
-                          <td>
-                            <Link
-                              aria-label={`View ${p.title} analytics`}
-                              href={`/${p.site}?days=${days}&path=${encodeURIComponent(p.path)}`}
-                            >
-                              <ArrowUpRight size={15} />
-                            </Link>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-                {(current === "blogs" || current === "overview") && (
-                  <p className="table-note">
-                    * Old blog counters are lifetime totals and may include
-                    refreshes. They are kept separate from new views.
-                  </p>
-                )}
-              </section>
-              <div className="breakdowns">
-                <Breakdown title="Devices" rows={data.device} />
-                <Breakdown title="Browsers" rows={data.browser} />
-                <Breakdown title="Operating systems" rows={data.os} />
-                <Breakdown title="Referrers" rows={data.referrer} />
-                {current === "resume" && (
-                  <Breakdown title="Resume actions" rows={data.kind} />
-                )}
-              </div>
+                </>
+              )}
               <div className="method-note">
                 <Check size={15} />
                 <p>
-                  Each page counts once per visit. A visit resets after 30
-                  minutes of inactivity. Known bots, DNT and GPC are excluded.
-                  Desktop and laptop are grouped because browsers don't reliably
-                  distinguish them. Daily visitors use a rotating anonymous
-                  estimate. No raw IPs or URL queries are stored.
+                  {current === "overview"
+                    ? "Hosted sites only · Refreshes excluded · One view per page per visit · Details in each website's sidebar page."
+                    : "Each page counts once per visit. Visits reset after 30 minutes of inactivity. Known bots, DNT and GPC are excluded. Desktop and laptop are grouped. Daily visitors are anonymous estimates. No raw IPs or URL queries are stored."}
                 </p>
               </div>
             </>

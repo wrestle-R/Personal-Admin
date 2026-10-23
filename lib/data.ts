@@ -18,7 +18,7 @@ export async function dashboardData(
       values,
     ),
     daily: query(
-      `SELECT to_char(created_at AT TIME ZONE 'Asia/Kolkata','YYYY-MM-DD') AS day,count(*)::int AS views FROM personal_admin.events WHERE ${where} AND kind='pageview' GROUP BY day ORDER BY day`,
+      `SELECT to_char(created_at AT TIME ZONE 'Asia/Kolkata','YYYY-MM-DD') AS day,count(*)::int AS views,count(DISTINCT visitor)::int AS visitors FROM personal_admin.events WHERE ${where} AND kind='pageview' GROUP BY day ORDER BY day`,
       values,
     ),
     legacy: query(
