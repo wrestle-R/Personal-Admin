@@ -1818,3 +1818,57 @@ td .post-tag {
     font-size: 10px;
   }
 }
+.app-shell:has(.overview-content) .topbar {
+  height: 52px;
+}
+.overview-content {
+  padding-top: 20px;
+}
+.overview-content .page-heading {
+  margin-bottom: 12px;
+}
+.overview-content .page-heading .muted {
+  display: none;
+}
+.overview-content .stats-grid > section {
+  padding: 13px 18px;
+}
+.overview-content .stats-grid strong {
+  font-size: 26px;
+  margin: 8px 0 5px;
+}
+.overview-line,
+.device-graph {
+  height: 135px;
+}
+.overview-graphs .mini-heading {
+  margin-bottom: 10px;
+}
+.overview-graphs .comparison-graph {
+  height: 86px;
+}
+.overview-websites,
+.overview-browsers {
+  min-height: 144px;
+}
+.overview-content .method-note {
+  margin: 9px 0 12px;
+}
+.overview-content .content-footer {
+  display: none;
+}
+@media (max-width: 760px) {
+  .overview-content .heading-actions {
+    margin-top: 0;
+  }
+  .overview-line {
+    height: 150px;
+  }
+  .overview-content .stats-grid > section {
+    padding: 14px;
+  }
+  .overview-content .method-note {
+    font-size: 9px;
+    line-height: 1.6;
+  }
+}
