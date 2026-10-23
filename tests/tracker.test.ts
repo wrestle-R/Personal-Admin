@@ -7,7 +7,12 @@ const source = readFileSync(
   new URL("../public/tracker.js", import.meta.url),
   "utf8",
 );
-function visit(storage: Map<string, string>, now: number, dnt = false) {
+function visit(
+  storage: Map<string, string>,
+  now: number,
+  dnt = false,
+  hostname = "blogs.russel.is-a.dev",
+) {
   const requests: Record<string, string>[] = [];
   const context = {
     window: {},
