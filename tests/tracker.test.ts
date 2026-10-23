@@ -28,7 +28,11 @@ function visit(storage: Map<string, string>, now: number, dnt = false) {
       readyState: "complete",
       addEventListener: () => {},
     },
-    location: { pathname: "/movies" },
+    location: {
+      pathname: "/movies",
+      hostname,
+      protocol: "https:",
+    },
     history: { pushState() {}, replaceState() {} },
     addEventListener: () => {},
     setTimeout: (fn: () => void) => fn(),
@@ -58,4 +62,12 @@ test("thirty minutes of inactivity starts a new visit", () => {
 });
 test("Do Not Track sends no events", () => {
   assert.equal(visit(new Map(), Date.now(), true).length, 0);
+});
+
+test("localhost and preview deployments send no analytics", () => {
+  assert.equal(visit(new Map(), Date.now(), false, "localhost").length, 0);
+  assert.equal(
+    visit(new Map(), Date.now(), false, "admin-preview.vercel.app").length,
+    0,
+  );
 });

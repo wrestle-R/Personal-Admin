@@ -1284,3 +1284,246 @@ td small {
     font-size: 9px;
   }
 }
+
+/* A quiet, dark workspace. This is the default at every viewport. */
+:root {
+  color-scheme: dark;
+  --bg: #131713;
+  --paper: #191e19;
+  --ink: #e3e9df;
+  --muted: #929e8b;
+  --line: #2c342a;
+  --green: #a1b994;
+  --soft: #222c20;
+  --sidebar: #171c16;
+}
+.brand-icon {
+  border-color: #394732;
+  color: #a8bf9c;
+}
+.workspace .avatar,
+.avatar {
+  background: #2e3d28;
+  color: #bdd0b0;
+}
+.workspace-dot,
+.status-dot {
+  background: #99b687;
+}
+.status-dot.bad {
+  background: #d08d70;
+}
+.nav-label {
+  color: #78866f;
+}
+nav > a {
+  color: #a5b09d;
+}
+nav > a.active {
+  background: #2c3927;
+  color: #d1e1c7;
+}
+nav > a:hover {
+  background: #232e20;
+}
+.nav-dot {
+  background: #63735a;
+}
+.sidebar-note {
+  border-color: #35412e;
+}
+.sidebar-footer {
+  color: #839078;
+}
+.logout {
+  color: #a7b39f;
+}
+.topbar {
+  color: #a6b29e;
+}
+.slash {
+  color: #5e6c55;
+}
+.private-badge > span {
+  background: #a4b98f;
+}
+.button {
+  background: #1d251b;
+  color: #cad6bf;
+  border-color: #3b4933;
+}
+.button:hover {
+  background: #2c3a26;
+}
+.primary {
+  background: #a8c197;
+  color: #172212;
+  border-color: #a8c197;
+}
+.primary:hover {
+  background: #bbd1ad;
+}
+.external {
+  color: #9eaf90;
+}
+.tabs {
+  background: #1d261a;
+  border-color: #303c29;
+}
+.tabs > a {
+  color: #9bab8c;
+}
+.tabs > a.selected {
+  background: #36432f;
+  color: #e4eddc;
+  box-shadow: none;
+}
+.stats-grid > section > span {
+  color: #acb99f;
+}
+.stats-grid svg {
+  color: #718365;
+}
+.stats-grid small,
+.tiny,
+.table-note,
+.method-note {
+  color: #8f9f82;
+}
+.panel-heading p,
+.site-card p,
+td small {
+  color: #91a181;
+}
+.legend {
+  color: #8fa27e;
+}
+.legend i,
+.bars span {
+  background: #91ad7b;
+}
+.chart-grid {
+  color: #738565;
+}
+.chart-grid > span {
+  border-color: #303c29;
+}
+.bars span.zero {
+  background: #303e28;
+}
+.bars span:hover {
+  background: #b5cb9f;
+}
+.chart-empty {
+  color: #849b72;
+}
+.chart-empty strong {
+  color: #b5c8a4;
+}
+.chart-axis {
+  color: #7d906d;
+}
+.section-title > span {
+  color: #8b9e7c;
+}
+.site-card {
+  background: var(--paper);
+}
+.site-card:hover {
+  background: #232d1e;
+  border-color: #4d6240;
+}
+.site-icon {
+  background: #313c24;
+  color: #becb8e;
+}
+.site-icon.portfolio {
+  background: #26353a;
+  color: #98b8c2;
+}
+.site-icon.spotify {
+  background: #273c2b;
+  color: #a0c999;
+}
+.site-icon.runny {
+  background: #3c3324;
+  color: #d0b48d;
+}
+.site-arrow {
+  color: #849673;
+}
+.site-bottom {
+  border-color: #303c29;
+}
+.site-bottom small {
+  color: #91a180;
+}
+thead {
+  background: #1c2419;
+  color: #91a17f;
+}
+th,
+td {
+  border-color: #2c3726;
+}
+tbody tr:hover {
+  background: #202b1b;
+}
+td .post-tag {
+  background: #303c26;
+  color: #aabb93;
+}
+.breakdowns {
+  background: var(--paper);
+}
+.breakdown-row small {
+  color: #879b75;
+}
+.track {
+  background: #2b3823;
+}
+.track > span {
+  background: #96b37f;
+}
+.empty-small {
+  color: #8d9f7b;
+}
+.content-footer {
+  color: #8b9b7c;
+}
+.db-grid section {
+  background: var(--paper);
+}
+.db-details dd {
+  color: #c1ceb5;
+}
+.error {
+  color: #e3a58b !important;
+}
+.notice {
+  background: #34291e;
+  border-color: #77533b;
+}
+.login input {
+  background: #1d261b;
+  border-color: #3b4933;
+  color: var(--ink);
+}
+.login-art {
+  background: #202c1b;
+}
+.login-art > div {
+  border-color: #526b43;
+}
+.login-art > span {
+  color: #9fb98a;
+}
+.login-foot {
+  color: #899a78;
+}
+.skip {
+  background: #25331e;
+}
+.login .muted {
+  color: #a3b298;
+}

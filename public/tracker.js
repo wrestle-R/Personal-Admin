@@ -1,4 +1,24 @@
 (() => {
+  const productionHosts = new Set([
+    "blogs.russel.is-a.dev",
+    "blogs.russeldanielpaul.is-a.dev",
+    "blog.russel.is-a.dev",
+    "blog.russeldanielpaul.is-a.dev",
+    "blogs-rdp.vercel.app",
+    "russel.is-a.dev",
+    "russeldanielpaul.is-a.dev",
+    "www.russel.is-a.dev",
+    "www.russeldanielpaul.is-a.dev",
+    "portfolio-rdp.vercel.app",
+    "spotify.russel.is-a.dev",
+    "spotify.russeldanielpaul.is-a.dev",
+    "russels-constellation.vercel.app",
+    "runny.russel.is-a.dev",
+    "runny.russeldanielpaul.is-a.dev",
+    "running-out-of-excuses.vercel.app",
+  ]);
+  if (location.protocol !== "https:" || !productionHosts.has(location.hostname))
+    return;
   if (
     window.__personalAdminTracker ||
     navigator.webdriver ||
