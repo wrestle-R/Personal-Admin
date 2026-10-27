@@ -6,7 +6,7 @@ A small, password-protected dashboard for my Blogs, Portfolio, Spotify constella
 - Once-per-page-per-visit views, devices, browsers, operating systems and referrer domains.
 - Portfolio resume visits and download/open actions.
 - Shared PostgreSQL connection checks, record counts and size.
-- Existing Runny Strava sync and CSV export with splits. Runny `/refresh` redirects here.
+- Runny analytics and CSV export with saved splits. Strava refresh controls have been removed.
 
 ## Local setup
 
@@ -31,3 +31,12 @@ Analytics uses a private schema with public, anon and authenticated access revok
 No editing controls are included in this first version.
 
 The overview stays compact with four KPIs and traffic, device, website and browser charts. Route tables live inside each website section. All analytics windows use Kolkata calendar days. Localhost and arbitrary preview domains are rejected before tracking starts.
+
+## Appearance and publishing
+
+The interface uses the dark Plum palette from Codex-swap, with local DM Sans
+fonts and lavender charts. It stays dark regardless of the operating-system theme.
+Website drilldowns, date filters, database checks and running exports use live data.
+
+Push reviewed changes directly to `main` in GitHub. The connected Vercel project
+builds and publishes that commit automatically. Do not deploy through the Vercel CLI.

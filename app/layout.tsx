@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" data-theme="plum">
       <body>{children}</body>
     </html>
   );

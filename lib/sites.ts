@@ -25,7 +25,7 @@ export const sites = [
     name: "Runny",
     host: "runny.russel.is-a.dev",
     url: "https://runny.russel.is-a.dev",
-    description: "Running Out of Excuses. Runs, sync and exports.",
+    description: "Running Out of Excuses. Runs, analytics and exports.",
   },
 ] as const;
 export function siteForOrigin(origin: string | null) {

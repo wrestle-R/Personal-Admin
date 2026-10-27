@@ -33,12 +33,12 @@ Chart.register(
 type Category = { name: string; count: number };
 type Day = { date: string; views: number; visitors: number };
 type Website = { id: string; name: string; views: number };
-const palette = ["#91b7aa", "#88a7c4", "#c2b78d", "#a89ab9"];
+const palette = ["#b29dce", "#8e789f", "#72617f", "#55495f"];
 const tooltip = {
-  backgroundColor: "#232b27",
-  titleColor: "#eef3ed",
-  bodyColor: "#c1cec2",
-  borderColor: "#465647",
+  backgroundColor: "#25202c",
+  titleColor: "#e8e5ee",
+  bodyColor: "#c7bdd1",
+  borderColor: "#51455e",
   borderWidth: 1,
   padding: 10,
   displayColors: true,
@@ -61,7 +61,7 @@ function Traffic({ days }: { days: Day[] }) {
             label: "Page views",
             data: days.map((d) => d.views),
             borderColor: palette[0],
-            backgroundColor: "#91b7aa15",
+            backgroundColor: "#b29dce13",
             fill: true,
             tension: 0.3,
             borderWidth: 2,
@@ -93,8 +93,8 @@ function Traffic({ days }: { days: Day[] }) {
             grid: { display: false },
             border: { display: false },
             ticks: {
-              color: "#87968a",
-              font: { size: 9 },
+              color: "#a9a2b6",
+              font: { size: 11, family: "DM Sans" },
               maxTicksLimit: 6,
               maxRotation: 0,
             },
@@ -104,8 +104,8 @@ function Traffic({ days }: { days: Day[] }) {
             suggestedMax: 1,
             border: { display: false },
             ticks: {
-              color: "#87968a",
-              font: { size: 9 },
+              color: "#a9a2b6",
+              font: { size: 11, family: "DM Sans" },
               maxTicksLimit: 4,
               precision: 0,
             },
@@ -188,7 +188,7 @@ function Devices({ rows }: { rows: Category[] }) {
           <div key={r.name}>
             <i
               style={{
-                background: total ? palette[i % palette.length] : "#465248",
+                background: total ? palette[i % palette.length] : "#51465d",
               }}
             />
             <span>{r.name}</span>
@@ -213,7 +213,7 @@ function Comparison({ rows, label }: { rows: Category[]; label: string }) {
             data: rows.map((r) => r.count),
             backgroundColor: palette,
             borderRadius: 3,
-            barThickness: 9,
+            barThickness: 8,
           },
         ],
       },
@@ -228,7 +228,7 @@ function Comparison({ rows, label }: { rows: Category[]; label: string }) {
           y: {
             grid: { display: false },
             border: { display: false },
-            ticks: { color: "#aab7aa", font: { size: 10 } },
+            ticks: { color: "#bdb2ca", font: { size: 12, family: "DM Sans" } },
           },
         },
       },

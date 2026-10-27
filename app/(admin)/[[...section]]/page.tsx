@@ -21,7 +21,7 @@ import { COOKIE, validSession } from "@/lib/auth";
 import { dashboardData, databaseStatus, type Row } from "@/lib/data";
 import { sites } from "@/lib/sites";
 import OverviewGraphs from "@/components/OverviewGraphs";
-import { Logout, Sync } from "@/components/Controls";
+import { Logout } from "@/components/Controls";
 export const dynamic = "force-dynamic";
 const fmt = (n: unknown) => Number(n || 0).toLocaleString("en-IN");
 const date = (s: unknown) =>
@@ -96,11 +96,11 @@ export default async function Page({
   const totals = data.totals[0] || {};
   const title =
     current === "overview"
-      ? "Overview."
+      ? "Overview"
       : current === "database"
-        ? "Under the hood."
+        ? "Database"
         : current === "resume"
-          ? "The resume."
+          ? "Resume"
           : path
             ? pages[0]?.title || path
             : site?.name || "";
@@ -132,22 +132,11 @@ export default async function Page({
           </span>
           personal<span className="muted">/ admin</span>
         </Link>
-        <div className="workspace">
-          <span className="avatar">r.</span>
-          <div>
-            Russel's corner<small>All my little websites</small>
-          </div>
-          <span className="workspace-dot" />
-        </div>
-        <p className="nav-label">WORKSPACE</p>
         <nav aria-label="Main">
-          <Link href="/" className={current === "overview" ? "active" : ""}>
+          <Link href="/" className={current === "overview" ? "active" : ""} aria-current={current === "overview" ? "page" : undefined}>
             <LayoutDashboard size={17} />
             Overview
           </Link>
-          <p className="nav-label">
-            MY WEBSITES <span>04</span>
-          </p>
           {sites.map((s) => {
             const Icon = icons[s.id];
             return (
@@ -155,21 +144,23 @@ export default async function Page({
                 key={s.id}
                 href={`/${s.id}`}
                 className={current === s.id ? "active" : ""}
+                aria-current={current === s.id ? "page" : undefined}
               >
                 <Icon size={17} />
                 {s.name}
-                <span className="nav-dot" />
               </Link>
             );
           })}
-          <Link href="/resume" className={current === "resume" ? "active" : ""}>
+          <div className="nav-divider" />
+          <Link href="/resume" className={current === "resume" ? "active" : ""} aria-current={current === "resume" ? "page" : undefined}>
             <ArrowDownToLine size={17} />
             Resume
           </Link>
-          <p className="nav-label">INFRASTRUCTURE</p>
+
           <Link
             href="/database"
             className={current === "database" ? "active" : ""}
+            aria-current={current === "database" ? "page" : undefined}
           >
             <Database size={17} />
             Database
@@ -180,12 +171,9 @@ export default async function Page({
           <div className="sidebar-note">
             <span className={`status-dot ${health.ok ? "" : "bad"}`} />
             {health.ok ? "Database connected" : "Database needs attention"}
-            <small>Checked when this page loaded</small>
+
           </div>
           <Logout />
-          <div className="sidebar-footer">
-            MADE FOR MY OWN SANITY <span>↗</span>
-          </div>
         </div>
       </aside>
       <div className="main">
@@ -213,10 +201,6 @@ export default async function Page({
         >
           <div className="page-heading">
             <div>
-              <p className="eyebrow">
-                PERSONAL /{" "}
-                {current === "overview" ? "AT A GLANCE" : current.toUpperCase()}
-              </p>
               {path && current !== "resume" && (
                 <Link className="back" href={`/${current}?days=${days}`}>
                   <ArrowLeft size={13} />
@@ -226,9 +210,9 @@ export default async function Page({
               <h1>{title}</h1>
               <p className="muted">
                 {current === "overview"
-                  ? "All the things I put online, together for once."
+                  ? "Traffic across your websites."
                   : current === "database"
-                    ? "Live checks on the shared database and the things it holds."
+                    ? "Connection health and records in your shared database."
                     : current === "resume"
                       ? "Page visits, PDF downloads and image downloads."
                       : path
@@ -248,14 +232,20 @@ export default async function Page({
                   <ArrowUpRight size={14} />
                 </a>
               )}
-              <form>
-                <input type="hidden" name="days" value={days} />
-                {path && <input type="hidden" name="path" value={path} />}
-                <button className="button">
-                  <Activity size={14} />
-                  Refresh stats
-                </button>
-              </form>
+              {current !== "database" && (
+                <nav className="tabs" aria-label="Date range">
+                  {[7, 30, 90].map((d) => (
+                    <Link
+                      key={d}
+                      href={query(d)}
+                      className={d === days ? "selected" : ""}
+                      aria-current={d === days ? "page" : undefined}
+                    >
+                      {d} days
+                    </Link>
+                  ))}
+                </nav>
+              )}
             </div>
           </div>
           {errors.length > 0 && (
@@ -266,22 +256,6 @@ export default async function Page({
           )}
           {current !== "database" && (
             <>
-              <div className="toolbar">
-                <div className="tabs">
-                  {[7, 30, 90].map((d) => (
-                    <Link
-                      key={d}
-                      href={query(d)}
-                      className={d === days ? "selected" : ""}
-                    >
-                      {d} days
-                    </Link>
-                  ))}
-                </div>
-                <span className="tiny">
-                  Asia / Kolkata · {date(new Date().toISOString())}
-                </span>
-              </div>
               <div className="stats-grid">
                 <section>
                   <span>
@@ -289,7 +263,7 @@ export default async function Page({
                     <MoveUpRight size={14} />
                   </span>
                   <strong>{fmt(totals.views)}</strong>
-                  <small>One per page, per visit. Reloads excluded.</small>
+                  <small>Reloads excluded.</small>
                 </section>
                 <section>
                   <span>
@@ -297,7 +271,7 @@ export default async function Page({
                     <Globe size={14} />
                   </span>
                   <strong>{fmt(totals.visitors)}</strong>
-                  <small>Estimated, summed across days and sites.</small>
+                  <small>Daily visitor estimates.</small>
                 </section>
                 <section>
                   <span>
@@ -314,7 +288,7 @@ export default async function Page({
                   <small>
                     {current === "resume"
                       ? "Downloads and open-file clicks."
-                      : "Across the selected date range."}
+                      : "In this date range."}
                   </small>
                 </section>
                 <section>
@@ -338,7 +312,7 @@ export default async function Page({
                   <section className="panel traffic">
                     <div className="panel-heading">
                       <div>
-                        <h2>Traffic, quietly.</h2>
+                        <h2>Traffic</h2>
                         <p>Page views over the last {days} days</p>
                       </div>
                       <span className="legend">
@@ -373,9 +347,9 @@ export default async function Page({
                       {!Number(totals.views) && (
                         <div className="chart-empty">
                           <Activity size={20} />
-                          <strong>Room for the first visit.</strong>
+                          <strong>No visits yet.</strong>
                           <span>
-                            New tracking starts here. No made-up history.
+                            Visits will appear here as they happen.
                           </span>
                         </div>
                       )}
@@ -415,7 +389,19 @@ export default async function Page({
                   range={days}
                 />
               )}
-              {current === "runny" && <Sync />}
+              {current === "runny" && (
+                <section className="panel export-panel">
+                  <h2>Your running data.</h2>
+                  <p className="muted">
+                    Download your saved activities, including any recorded splits.
+                  </p>
+                  <div className="actions">
+                    <a className="primary" href="/api/export">
+                      <ArrowDownToLine size={15} /> Export CSV + splits
+                    </a>
+                  </div>
+                </section>
+              )}
               {current !== "overview" && (
                 <>
                   <section className="panel pages-panel">
@@ -425,11 +411,11 @@ export default async function Page({
                           {path
                             ? "This page"
                             : current === "blogs"
-                              ? "Every post. Every page."
-                              : "Pages & destinations"}
+                              ? "Posts & pages"
+                              : "Pages"}
                         </h2>
                         <p>
-                          Pick a page for its devices, browsers and referrers.
+                          Select a page to see its traffic sources and devices.
                         </p>
                       </div>
                       <span className="tiny">
@@ -519,7 +505,7 @@ export default async function Page({
                 <Check size={15} />
                 <p>
                   {current === "overview"
-                    ? "Hosted sites only · Refreshes excluded · One view per page per visit · Details in each website's sidebar page."
+                    ? "One view per page per visit. Refreshes excluded. Production sites only."
                     : "Each page counts once per visit. Visits reset after 30 minutes of inactivity. Known bots, DNT and GPC are excluded. Desktop and laptop are grouped. Daily visitors are anonymous estimates. No raw IPs or URL queries are stored."}
                 </p>
               </div>
@@ -532,8 +518,8 @@ export default async function Page({
                 <div>
                   <h2>
                     {health.ok
-                      ? "The database is answering."
-                      : "Something needs a look."}
+                      ? "Database connected"
+                      : "Connection needs attention"}
                   </h2>
                   <p className="muted">
                     {health.ok
@@ -585,7 +571,7 @@ export default async function Page({
           )}
           <footer className="content-footer">
             <span>personal / admin</span>
-            <span>A quiet place to keep an eye on things.</span>
+            <span>Times shown in IST</span>
           </footer>
         </main>
       </div>

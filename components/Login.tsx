@@ -32,7 +32,7 @@ export default function Login() {
           </span>{" "}
           personal<span className="muted">/ admin</span>
         </div>
-        <p className="eyebrow">JUST FOR ME</p>
+        <p className="eyebrow">My workspace</p>
         <h1>
           Everything,
           <br />
@@ -53,7 +53,7 @@ export default function Login() {
             autoFocus
           />
           <button className="primary" disabled={busy}>
-            {busy ? "Opening…" : "Come in"}
+            {busy ? "Opening…" : "Sign in"}
             <ArrowRight size={16} />
           </button>
           {error && (
@@ -69,9 +69,9 @@ export default function Login() {
         <div />
         <div />
         <span>
-          ONE QUIET CORNER
+          A quiet corner
           <br />
-          OF THE INTERNET.
+          of the internet.
         </span>
       </div>
     </main>
