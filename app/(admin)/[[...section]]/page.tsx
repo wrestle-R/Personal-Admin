@@ -20,6 +20,7 @@ import {
 import { COOKIE, validSession } from "@/lib/auth";
 import { dashboardData, databaseStatus, type Row } from "@/lib/data";
 import { sites } from "@/lib/sites";
+import RunnyPhotos from "@/components/RunnyPhotos";
 import OverviewGraphs from "@/components/OverviewGraphs";
 import { Logout } from "@/components/Controls";
 export const dynamic = "force-dynamic";
@@ -390,17 +391,20 @@ export default async function Page({
                 />
               )}
               {current === "runny" && (
-                <section className="panel export-panel">
-                  <h2>Your running data.</h2>
-                  <p className="muted">
-                    Download your saved activities, including any recorded splits.
-                  </p>
-                  <div className="actions">
-                    <a className="primary" href="/api/export">
-                      <ArrowDownToLine size={15} /> Export CSV + splits
-                    </a>
-                  </div>
-                </section>
+                <>
+                  <RunnyPhotos />
+                  <section className="panel export-panel">
+                    <h2>Your running data.</h2>
+                    <p className="muted">
+                      Download your saved activities, including any recorded splits.
+                    </p>
+                    <div className="actions">
+                      <a className="primary" href="/api/export">
+                        <ArrowDownToLine size={15} /> Export CSV + splits
+                      </a>
+                    </div>
+                  </section>
+                </>
               )}
               {current !== "overview" && (
                 <>

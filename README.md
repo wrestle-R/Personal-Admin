@@ -40,3 +40,13 @@ Website drilldowns, date filters, database checks and running exports use live d
 
 Push reviewed changes directly to `main` in GitHub. The connected Vercel project
 builds and publishes that commit automatically. Do not deploy through the Vercel CLI.
+
+## Runny photo editor
+
+Sign in at `/runny`, choose a gallery/timeline period under **Runny photos**, select a photo (JPG, PNG, WebP, AVIF or GIF, up to 10 MB), add its description/caption, and choose **Upload & publish**. Existing photos support text edits, replacement, ordering, removal and restoration. Phone timelines show the first two assigned photos. CSV exports and analytics remain available.
+
+Uploads use the existing Cloudinary environment `dvti0xrsg`. Configure `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY` and `CLOUDINARY_API_SECRET` on the server in `.env.local` and the connected Vercel project's Production/Preview environments. Never use a public-prefix secret. Sync real environment-file changes with Varte for `wrestle-R/Personal-Admin`, repository root, `.env.local`.
+
+The shared database table `public.runny_photos` is defined in the Running_out_of_Excuses repository's `prisma/migrations/202610270001_runny_photos/migration.sql`. Its original photo seed lives there too. Apply that additive migration/seed before deploying the editor; never reset the shared database. Admin uses its existing authenticated session and same-origin write checks. Browser uploads use signed unique Cloudinary IDs with overwrite disabled; the server independently verifies image metadata before publishing. Remove is reversible and does not delete Cloudinary originals. Concurrent stale edits return a conflict instead of overwriting another tab's change.
+
+Runny reads saved photo records on visits/reloads and checks every 30 seconds while visible, so individual photo updates require no GitHub commit or deployment. Initial code publishing remains GitHub main → connected Vercel only.
