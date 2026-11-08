@@ -1,3 +1,4 @@
+import Script from "next/script";
 import type { Metadata } from "next";
 import "@fontsource/dm-sans/400.css";
 import "@fontsource/dm-sans/500.css";
@@ -11,7 +12,10 @@ export const metadata: Metadata = {
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" data-theme="plum">
-      <body>{children}</body>
+      <body>
+        {children}
+        <Script src="/external-links.js" strategy="afterInteractive" />
+      </body>
     </html>
   );
 }
