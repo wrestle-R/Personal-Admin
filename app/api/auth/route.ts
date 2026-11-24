@@ -9,30 +9,20 @@ import {
   sign,
 } from "@/lib/auth";
 import { limit } from "@/lib/limit";
+import { readJsonObject, RequestBodyError } from "@/lib/request-json";
+import { requestIp } from "@/lib/request-ip";
 export const dynamic = "force-dynamic";
 export async function POST(request: Request) {
   if (!sameOrigin(request))
     return privateJson({ error: "Invalid origin" }, 403);
   try {
-    const key = sign(
-      "login:" +
-        (
-          request.headers.get("x-vercel-forwarded-for") ||
-          request.headers.get("x-forwarded-for") ||
-          "local"
-        ).split(",")[0],
-    );
+    const key = sign("login:" + requestIp(request));
     if (!(await limit(key, 8, 900)))
       return privateJson(
         { error: "Too many attempts. Try again in 15 minutes." },
         429,
       );
-    if (Number(request.headers.get("content-length") || 0) > 2048)
-      return privateJson({ error: "Invalid request" }, 413);
-    const raw = await request.text();
-    if (raw.length > 2048)
-      return privateJson({ error: "Invalid request" }, 413);
-    const body = JSON.parse(raw);
+    const body = await readJsonObject(request, 2048);
     if (!passwordMatches(body.password))
       return privateJson({ error: "That password isn't right." }, 401);
     const response = privateJson({ ok: true });
@@ -41,7 +31,9 @@ export async function POST(request: Request) {
       `${COOKIE}=${createSession()}; Path=/; HttpOnly; SameSite=Strict; Max-Age=${TTL}${new URL(request.url).protocol === "https:" ? "; Secure" : ""}`,
     );
     return response;
-  } catch {
+  } catch (error) {
+    if (error instanceof RequestBodyError)
+      return privateJson({ error: "Invalid request" }, error.status);
     return privateJson(
       { error: "Unable to sign in. Check the server connection." },
       503,

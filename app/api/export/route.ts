@@ -1,10 +1,6 @@
 import { authenticated, privateJson } from "@/lib/auth";
 import { query } from "@/lib/db";
-export function csvCell(value: unknown) {
-  let text = String(value ?? "");
-  if (/^[=+@\-\t\r]/.test(text)) text = "'" + text;
-  return '"' + text.replaceAll('"', '""') + '"';
-}
+import { csvCell } from "@/lib/csv";
 export async function GET(request: Request) {
   if (!authenticated(request))
     return privateJson({ error: "Sign in required" }, 401);
