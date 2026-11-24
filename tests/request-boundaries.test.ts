@@ -16,8 +16,8 @@ test("the request reader counts bytes and requires a JSON object", async () => {
   }), bytes), (error) => error instanceof RequestBodyError && error.status === 400);
 });
 
-test("analytics requests share a throttle when only the browser identity changes", async (t) => {
-  const keys: unknown[] = [];
+test("analytics throttles by the Vercel client address across browsers and header fallbacks", async (t) => {
+  const hitsByKey = new Map<unknown, number>();
   let events = 0;
   const globalDb = globalThis as unknown as { adminPool?: { query: (sql: string, values: unknown[]) => unknown } };
   const oldPool = globalDb.adminPool;
@@ -35,20 +35,22 @@ test("analytics requests share a throttle when only the browser identity changes
   globalDb.adminPool = {
     query(sql: string, values: unknown[]) {
       if (sql.includes("personal_admin.limits")) {
-        keys.push(values[0]);
-        return { rows: [{ hits: keys.length === 1 ? 120 : 121 }] };
+        const hits = (hitsByKey.get(values[0]) ?? 119) + 1;
+        hitsByKey.set(values[0], hits);
+        return { rows: [{ hits }] };
       }
       assert.match(sql, /INSERT INTO personal_admin.events/);
       events++;
       return { rows: [] };
     },
   };
-  const request = (ua: string, forwarded: string) => new Request("https://admin.test/api/collect", {
+  const request = (ua: string, forwarded: string, vercelIp: string, realIp: string) => new Request("https://admin.test/api/collect", {
     method: "POST",
     headers: {
       origin: "https://blogs.russel.is-a.dev",
       "user-agent": ua,
-      "x-vercel-forwarded-for": "192.0.2.1",
+      "x-vercel-forwarded-for": vercelIp,
+      "x-real-ip": realIp,
       "x-forwarded-for": forwarded,
     },
     body: JSON.stringify({
@@ -57,10 +59,10 @@ test("analytics requests share a throttle when only the browser identity changes
       kind: "pageview",
     }),
   });
-  assert.equal((await collect(request("Mozilla Chrome", "192.0.2.2"))).status, 204);
-  assert.equal((await collect(request("Mozilla Firefox", "192.0.2.3"))).status, 429);
-  assert.equal(keys[0], keys[1]);
-  assert.equal(events, 1);
+  assert.equal((await collect(request("Mozilla Chrome", "192.0.2.2", "192.0.2.1", "192.0.2.4"))).status, 204);
+  assert.equal((await collect(request("Mozilla Firefox", "192.0.2.3", "", "192.0.2.1"))).status, 429);
+  assert.equal((await collect(request("Mozilla Firefox", "192.0.2.3", "invalid", "192.0.2.4"))).status, 204);
+  assert.equal(events, 2);
 });
 
 test("spreadsheet cells keep ordinary text and neutralize leading formula markers", () => {
