@@ -3,6 +3,8 @@ import { siteForOrigin, normalizePath, classify, isBot } from "@/lib/sites";
 import { sign } from "@/lib/auth";
 import { query } from "@/lib/db";
 import { limit } from "@/lib/limit";
+import { readJsonObject, RequestBodyError } from "@/lib/request-json";
+import { requestIp } from "@/lib/request-ip";
 export const dynamic = "force-dynamic";
 function cors(request: Request) {
   return {
@@ -30,10 +32,8 @@ export async function POST(request: Request) {
   if (isBot(ua))
     return new Response(null, { status: 204, headers: cors(request) });
   try {
-    const raw = await request.text();
-    if (raw.length > 2048) return new Response(null, { status: 413 });
-    const body = JSON.parse(raw),
-      path = normalizePath(body.path);
+    const body = await readJsonObject(request, 2048);
+    const path = normalizePath(body.path);
     if (
       typeof body.session !== "string" ||
       !/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
@@ -42,10 +42,10 @@ export async function POST(request: Request) {
     )
       return new Response(null, { status: 400 });
     const visitKey = sign("visit:" + site.id + ":" + body.session);
-    const kinds = ["pageview", "resume_pdf", "resume_image", "resume_open", "apk_download"];
+    const kinds = new Set<unknown>(["pageview", "resume_pdf", "resume_image", "resume_open", "apk_download"]);
     if (
       !path ||
-      !kinds.includes(body.kind) ||
+      !kinds.has(body.kind) ||
       (body.kind === "apk_download"
         ? site.id !== "logit" || path !== "/download"
         : body.kind !== "pageview" && (site.id !== "portfolio" || path !== "/resume"))
@@ -57,19 +57,13 @@ export async function POST(request: Request) {
       month: "2-digit",
       day: "2-digit",
     }).format(new Date());
-    const ip = (
-      request.headers.get("x-vercel-forwarded-for") ||
-      request.headers.get("x-forwarded-for") ||
-      "unknown"
-    )
-      .split(",")[0]
-      .trim();
+    const ip = requestIp(request);
     const visitor = sign(`${day}:${site.id}:${ip}:${ua}`);
-    if (!(await limit("event:" + visitor, 120, 60)))
-      return new Response(null, { status: 429 });
+    if (!(await limit(sign(`event:${site.id}:${ip}`), 120, 60)))
+      return new Response(null, { status: 429, headers: cors(request) });
     let referrer = "Direct";
     try {
-      const ref = new URL(body.referrer);
+      const ref = new URL(typeof body.referrer === "string" ? body.referrer : "");
       if (ref.origin !== request.headers.get("origin"))
         referrer = ref.hostname.slice(0, 200);
     } catch {}
@@ -94,7 +88,10 @@ export async function POST(request: Request) {
       ],
     );
     return new Response(null, { status: 204, headers: cors(request) });
-  } catch {
-    return new Response(null, { status: 503, headers: cors(request) });
+  } catch (error) {
+    return new Response(null, {
+      status: error instanceof RequestBodyError ? error.status : 503,
+      headers: cors(request),
+    });
   }
 }
