@@ -27,6 +27,13 @@ export const sites = [
     url: "https://runny.russel.is-a.dev",
     description: "Running Out of Excuses. Runs, analytics and exports.",
   },
+  {
+    id: "logit",
+    name: "LogIt",
+    host: "log-it-rdp.vercel.app",
+    url: "https://log-it-rdp.vercel.app",
+    description: "Visitors and Android APK downloads.",
+  },
 ] as const;
 export function siteForOrigin(origin: string | null) {
   if (!origin) return undefined;
@@ -51,6 +58,7 @@ export function siteForOrigin(origin: string | null) {
         "spotify.russeldanielpaul.is-a.dev",
         "russels-constellation.vercel.app",
       ],
+      logit: ["log-it-rdp.vercel.app"],
       runny: ["runny.russel.is-a.dev", "runny.russeldanielpaul.is-a.dev"],
     };
     return sites.find((s) => aliases[s.id].includes(url.hostname));

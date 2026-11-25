@@ -40,6 +40,7 @@ const icons = {
   portfolio: Monitor,
   spotify: Headphones,
   runny: Footprints,
+  logit: Globe,
 };
 function Breakdown({ title, rows }: { title: string; rows: Row[] }) {
   const sum = rows.reduce((n, r) => n + Number(r.count), 0);
@@ -278,18 +279,18 @@ export default async function Page({
                   <span>
                     {current === "resume"
                       ? "Resume actions"
-                      : "Pages with visits"}
+                      : selectedSite === "logit" ? "APK downloads" : "Pages with visits"}
                     <BookOpen size={14} />
                   </span>
                   <strong>
-                    {current === "resume"
+                    {(current === "resume" || selectedSite === "logit")
                       ? fmt(totals.downloads)
                       : fmt(pages.filter((p) => Number(p.views) > 0).length)}
                   </strong>
                   <small>
                     {current === "resume"
                       ? "Downloads and open-file clicks."
-                      : "In this date range."}
+                      : selectedSite === "logit" ? "Download requests from the website." : "In this date range."}
                   </small>
                 </section>
                 <section>
