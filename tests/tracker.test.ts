@@ -12,10 +12,17 @@ function visit(
   now: number,
   dnt = false,
   hostname = "blogs.russel.is-a.dev",
+  download = false,
 ) {
   const requests: Record<string, string>[] = [];
+  class Element {
+    closest() { return this; }
+    getAttribute(name: string) { return name === "href" ? "/download" : null; }
+  }
+  let click: ((event: { isTrusted: boolean; target: Element }) => void) | undefined;
   const context = {
     window: {},
+    Element,
     navigator: { webdriver: false, doNotTrack: dnt ? "1" : "0" },
     crypto: { randomUUID },
     Date: class extends Date {
@@ -31,7 +38,7 @@ function visit(
       visibilityState: "visible",
       referrer: "",
       readyState: "complete",
-      addEventListener: () => {},
+      addEventListener: (name: string, handle: typeof click) => { if (name === "click") click = handle; },
     },
     location: {
       pathname: "/movies",
@@ -47,6 +54,7 @@ function visit(
     },
   };
   vm.runInNewContext(source, context);
+  if (download) click?.({isTrusted: true, target: new Element()});
   return requests;
 }
 test("reloads preserve a page visit ID across executions", () => {
@@ -75,4 +83,11 @@ test("localhost and preview deployments send no analytics", () => {
     visit(new Map(), Date.now(), false, "admin-preview.vercel.app").length,
     0,
   );
+});
+
+
+test("LogIt tracks the APK action separately from a page visit", () => {
+  const events = visit(new Map(), Date.now(), false, "log-it-rdp.vercel.app", true);
+  assert.deepEqual(events.map(event => [event.kind, event.path]), [["pageview", "/movies"], ["apk_download", "/download"]]);
+  assert.equal(events[0].session, events[1].session);
 });

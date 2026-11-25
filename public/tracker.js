@@ -11,6 +11,7 @@
     "spotify.russel.is-a.dev",
     "spotify.russeldanielpaul.is-a.dev",
     "russels-constellation.vercel.app",
+    "log-it-rdp.vercel.app",
     "runny.russel.is-a.dev",
     "runny.russeldanielpaul.is-a.dev",
   ]);
@@ -57,9 +58,9 @@
       },
       { passive: true },
     );
-  function send(kind = "pageview") {
+  function send(kind = "pageview", pathOverride) {
     if (document.visibilityState !== "visible") return;
-    const path = location.pathname.replace(/\/$/, "") || "/";
+    const path = pathOverride || location.pathname.replace(/\/$/, "") || "/";
     if (path === "/refresh" || path.startsWith("/api/")) return;
     if (kind === "pageview" && path === lastPath && Date.now() - lastAt < 1500)
       return;
@@ -103,8 +104,12 @@
       if (!event.isTrusted) return;
       const node =
         event.target instanceof Element
-          ? event.target.closest("[data-admin-event],a[href*='/Resume/']")
+          ? event.target.closest("[data-admin-event],a[href*='/Resume/'],a[href='/download']")
           : null;
+      if (node && location.hostname === "log-it-rdp.vercel.app" && node.getAttribute("href") === "/download") {
+        send("apk_download", "/download");
+        return;
+      }
       if (!node || location.pathname.replace(/\/$/, "") !== "/resume") return;
       const explicit = node.getAttribute("data-admin-event");
       const kind =

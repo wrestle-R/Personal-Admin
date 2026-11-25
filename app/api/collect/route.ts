@@ -42,12 +42,13 @@ export async function POST(request: Request) {
     )
       return new Response(null, { status: 400 });
     const visitKey = sign("visit:" + site.id + ":" + body.session);
-    const kinds = new Set<unknown>(["pageview", "resume_pdf", "resume_image", "resume_open"]);
+    const kinds = new Set<unknown>(["pageview", "resume_pdf", "resume_image", "resume_open", "apk_download"]);
     if (
       !path ||
       !kinds.has(body.kind) ||
-      (body.kind !== "pageview" &&
-        (site.id !== "portfolio" || path !== "/resume"))
+      (body.kind === "apk_download"
+        ? site.id !== "logit" || path !== "/download"
+        : body.kind !== "pageview" && (site.id !== "portfolio" || path !== "/resume"))
     )
       return new Response(null, { status: 400 });
     const day = new Intl.DateTimeFormat("en-CA", {

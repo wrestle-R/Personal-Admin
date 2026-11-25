@@ -10,7 +10,7 @@ export async function dashboardData(
   const where = `created_at >= (((now() AT TIME ZONE 'Asia/Kolkata')::date - ($1::int - 1))::timestamp AT TIME ZONE 'Asia/Kolkata') AND ($2::text IS NULL OR site=$2) AND ($3::text IS NULL OR path=$3)`;
   const jobs: Record<string, Promise<Row[]>> = {
     totals: query(
-      `SELECT count(*) FILTER(WHERE kind='pageview')::int AS views, count(DISTINCT visitor) FILTER(WHERE kind='pageview')::int AS visitors,count(*) FILTER(WHERE kind LIKE 'resume_%')::int AS downloads, min(created_at)::text AS first FROM personal_admin.events WHERE ${where}`,
+      `SELECT count(*) FILTER(WHERE kind='pageview')::int AS views, count(DISTINCT visitor) FILTER(WHERE kind='pageview')::int AS visitors,count(*) FILTER(WHERE (kind LIKE 'resume_%' OR kind='apk_download'))::int AS downloads, min(created_at)::text AS first FROM personal_admin.events WHERE ${where}`,
       values,
     ),
     pages: query(
